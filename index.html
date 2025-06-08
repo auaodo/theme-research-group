@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="dark-theme">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="一个复杂的HTML、CSS和JavaScript单页网站示例">
-    <meta name="author" content="Gemini AI">
-    <title>Complex HTML Page | 动态交互网站</title>
+    <title>Complex Cyberpunk Portfolio | 复杂交互式作品集</title>
     
+    <!-- 字体: Fira Code for a mono-spaced, techy feel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
     
+    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
@@ -18,23 +18,34 @@
         /* --- CSS STYLESHEET --- */
         /* ------------------------- */
 
-        /* --- 1. 全局变量与重置 --- */
+        /* --- 1. 主题变量与全局样式 --- */
         :root {
-            --primary-color: #4a90e2;
-            --secondary-color: #50e3c2;
-            --background-color: #121212;
-            --surface-color: #1e1e1e;
-            --text-color: #e0e0e0;
-            --text-secondary-color: #a0a0a0;
-            --border-radius: 12px;
-            --shadow-light: 5px 5px 10px #0d0d0d;
-            --shadow-dark: -5px -5px 10px #2a2a2a;
+            --glow-primary: #00f6ff;
+            --glow-secondary: #ff00ff;
+            --glow-accent: #fcee0a;
+            --font-family-sans: 'Noto Sans SC', sans-serif;
+            --font-family-mono: 'Fira Code', monospace;
         }
 
-        * {
+        .dark-theme {
+            --bg-color: #0a0a14;
+            --surface-color: #141428;
+            --text-color: #e0e0e0;
+            --border-color: rgba(0, 246, 255, 0.2);
+        }
+
+        .light-theme {
+            --bg-color: #e5e5f0;
+            --surface-color: #f5f5fa;
+            --text-color: #141428;
+            --border-color: rgba(255, 0, 255, 0.3);
+        }
+
+        /* --- 2. 全局重置与基础设置 --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         html {
@@ -42,393 +53,483 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--background-color);
+            background-color: var(--bg-color);
             color: var(--text-color);
-            line-height: 1.6;
+            font-family: var(--font-family-sans);
             overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
 
-        /* --- 2. 粒子背景 --- */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
+        /* --- 3. 赛博朋克辉光与动画效果 --- */
+        .glow-text {
+            color: var(--glow-primary);
+            text-shadow: 0 0 5px var(--glow-primary), 0 0 10px var(--glow-primary), 0 0 20px var(--glow-primary), 0 0 40px var(--glow-secondary);
         }
 
-        /* --- 3. 导航栏 --- */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            transition: background-color 0.4s ease, padding 0.4s ease;
-        }
-
-        .navbar.scrolled {
-            background-color: rgba(30, 30, 30, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 0.5rem 5%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .nav-logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-        }
-
-        .nav-links li {
-            margin-left: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 600;
+        .cyber-glitch-btn {
+            padding: 15px 30px;
+            font-family: var(--font-family-mono);
+            font-size: 1rem;
+            color: var(--glow-primary);
+            background: transparent;
+            border: 2px solid var(--glow-primary);
+            cursor: pointer;
             position: relative;
-            transition: color 0.3s ease;
+            overflow: hidden;
+            text-transform: uppercase;
+            box-shadow: 0 0 5px var(--glow-primary), 0 0 10px var(--glow-primary) inset;
         }
-        
-        .nav-links a::after {
+
+        .cyber-glitch-btn::before {
             content: '';
             position: absolute;
-            width: 0;
-            height: 2px;
-            background: var(--secondary-color);
-            bottom: -5px;
-            left: 0;
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--secondary-color);
-        }
-
-        .nav-links a:hover::after {
+            top: 0;
+            left: -100%;
             width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(0, 246, 255, 0.5), transparent);
+            transition: left 0.5s;
         }
 
-        .nav-toggle {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
+        .cyber-glitch-btn:hover::before {
+            left: 100%;
         }
 
+        /* 扫描线动画 */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0,0,0,0) 0, rgba(0,0,0,0) 2px, rgba(255,255,255,0.05) 2px, rgba(255,255,255,0.05) 3px);
+            animation: scanlines 10s linear infinite;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        @keyframes scanlines {
+            from { background-position: 0 0; }
+            to { background-position: 0 100px; }
+        }
 
-        /* --- 4. Hero区域 --- */
+        /* 滚动触发动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--surface-color); }
+        ::-webkit-scrollbar-thumb {
+            background: var(--glow-primary);
+            box-shadow: 0 0 10px var(--glow-primary);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--glow-secondary);
+            box-shadow: 0 0 10px var(--glow-secondary);
+        }
+
+        /* --- 4. 布局与容器 --- */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-family: var(--font-family-mono);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+        }
+
+        /* --- 5. 英雄区域 (Hero) --- */
         .hero {
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 0 5%;
-            position: relative;
         }
         
-        .hero-content {
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 700;
+        #typewriter {
+            font-family: var(--font-family-mono);
+            font-size: clamp(2rem, 8vw, 4.5rem);
             margin-bottom: 1rem;
-            background: -webkit-linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
-
+        
+        #typewriter .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 3.5rem;
+            background-color: var(--glow-accent);
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        
         .hero p {
             font-size: 1.2rem;
-            color: var(--text-secondary-color);
+            color: #aaa;
             margin-bottom: 2rem;
-            max-width: 600px;
         }
 
-        .cta-button {
-            display: inline-block;
-            padding: 12px 28px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: #fff;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+        /* --- 6. 服务卡片 (Services) --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(80, 227, 194, 0.5);
-        }
-
-        /* --- 5. 作品集 (Portfolio) --- */
-        .section {
-            padding: 6rem 5%;
-            position: relative;
-            z-index: 1;
-        }
-
-        .section-title {
+        .service-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
             text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--primary-color);
+            transition: transform 0.2s linear;
+            will-change: transform;
         }
         
-        .portfolio-filters {
+        .service-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--glow-primary);
+            text-shadow: 0 0 10px var(--glow-primary);
+        }
+
+        .service-card h3 {
+            font-family: var(--font-family-mono);
+            margin-bottom: 1rem;
+            color: var(--glow-accent);
+        }
+
+        /* --- 7. 作品集 (Projects) --- */
+        .project-filters {
             text-align: center;
             margin-bottom: 2rem;
         }
         
-        .filter-btn {
-            background: none;
-            border: 2px solid var(--surface-color);
-            color: var(--text-secondary-color);
+        .project-filters button {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
             padding: 8px 20px;
-            margin: 0 10px;
+            margin: 0 5px;
             cursor: pointer;
-            border-radius: var(--border-radius);
             transition: all 0.3s ease;
         }
         
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--primary-color);
-            color: #fff;
-            border-color: var(--primary-color);
+        .project-filters button.active, .project-filters button:hover {
+            color: var(--bg-color);
+            background-color: var(--glow-primary);
+            box-shadow: 0 0 10px var(--glow-primary);
         }
         
-        .portfolio-grid {
+        .project-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
         }
 
-        .portfolio-item {
+        .project-item {
             background-color: var(--surface-color);
-            border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: var(--shadow-light);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
+            border: 1px solid var(--border-color);
             position: relative;
+            transition: transform 0.3s, opacity 0.3s;
         }
         
-        .portfolio-item.hide {
-            display: none;
+        .project-item.hide {
+            transform: scale(0.8);
+            opacity: 0;
+            width: 0;
+            height: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
         }
 
-        .portfolio-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-        }
-
-        .portfolio-item img {
+        .project-item img {
             width: 100%;
             height: 220px;
             object-fit: cover;
             display: block;
+            filter: grayscale(0.5);
+            transition: filter 0.3s, transform 0.3s;
         }
 
-        .portfolio-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.4s ease;
+        .project-item:hover img {
+            filter: grayscale(0);
+            transform: scale(1.1);
         }
         
-        .portfolio-item:hover .portfolio-overlay {
-            opacity: 1;
+        .project-info {
+            padding: 1rem;
         }
 
-        .portfolio-overlay h3 {
-            margin-bottom: 0.5rem;
-        }
-        
-        /* --- 6. 联系表单 --- */
-        .contact-form {
-            max-width: 700px;
+        .project-info h3 { color: var(--glow-secondary); }
+
+        /* --- 8. 联系表单 (Terminal Contact) --- */
+        .terminal-contact {
+            background-color: #000;
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            font-family: var(--font-family-mono);
+            max-width: 800px;
             margin: 0 auto;
-            padding: 2.5rem;
-            background-color: var(--surface-color);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-light);
         }
         
-        .form-group {
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            background: var(--background-color);
-            border: 2px solid var(--surface-color);
-            border-radius: var(--border-radius);
-            color: var(--text-color);
-            font-family: 'Poppins', sans-serif;
-            transition: border-color 0.3s ease;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-        
-        .error-message {
-            color: #e74c3c;
-            font-size: 0.8rem;
-            margin-top: 5px;
-            display: none;
+        .terminal-output {
+            height: 200px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
         }
 
-        .form-control.invalid {
-            border-color: #e74c3c;
+        .terminal-line {
+            line-height: 1.5;
         }
         
-        .form-control.valid {
-            border-color: var(--secondary-color);
-        }
-
-        /* --- 7. Footer --- */
-        .footer {
-            background-color: var(--surface-color);
-            text-align: center;
-            padding: 2rem 5%;
-            margin-top: 4rem;
-        }
-        
-        .footer-social-links a {
-            color: var(--text-secondary-color);
-            font-size: 1.5rem;
-            margin: 0 1rem;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-social-links a:hover {
-            color: var(--primary-color);
-        }
-        
-        /* --- 8. Modal弹窗 --- */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
+        .terminal-input-line {
             display: flex;
-            justify-content: center;
             align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
-        
-        .modal.active {
-            opacity: 1;
-            visibility: visible;
+
+        .terminal-prompt {
+            color: var(--glow-primary);
+            margin-right: 0.5rem;
         }
-        
-        .modal-content {
-            max-width: 90%;
-            max-height: 90%;
-        }
-        
-        .modal-content img {
+
+        #terminal-input {
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            font-family: var(--font-family-mono);
             width: 100%;
-            height: 100%;
-            object-fit: contain;
+            font-size: 1rem;
         }
-        
-        .modal-close {
-            position: absolute;
+        #terminal-input:focus { outline: none; }
+
+        /* --- 9. 主题切换器 --- */
+        #theme-toggler {
+            position: fixed;
             top: 20px;
-            right: 30px;
-            font-size: 2.5rem;
-            color: #fff;
+            right: 20px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            color: var(--glow-primary);
             cursor: pointer;
-        }
-
-        /* --- 9. 响应式设计 --- */
-        @media (max-width: 768px) {
-            .nav-toggle {
-                display: block;
-            }
-            .nav-links {
-                position: absolute;
-                top: 100%;
-                right: 0;
-                background-color: var(--surface-color);
-                width: 100%;
-                flex-direction: column;
-                align-items: center;
-                padding: 1rem 0;
-                transform: translateY(-10px);
-                opacity: 0;
-                visibility: hidden;
-                transition: transform 0.4s ease, opacity 0.4s ease, visibility 0.4s ease;
-            }
-            
-            .nav-links.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-
-            .nav-links li {
-                margin: 1rem 0;
-            }
-            
-            .hero h1 {
-                font-size: 2.8rem;
-            }
+            z-index: 1001;
         }
     </style>
 </head>
 <body>
+    <button id="theme-toggler"><i class="fas fa-sun"></i></button>
 
-    <div id="particles-js"></div>
-
-    <header>
-        <nav class="navbar" id="navbar">
-            <a href="#" class="nav-logo">Complex.</a>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#hero">首页</a></li>
-                <li><a href="#portfolio">作品集</a></li>
-                <li><a href="#contact">联系我</a></li>
-            </ul>
-            <div class="nav-toggle" id="nav-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-        </nav>
+    <header class="hero">
+        <div class="hero-content">
+            <h1 id="typewriter" class="glow-text"></h1>
+            <p>构建未来的数字接口 & 沉浸式体验</p>
+            <a href="#projects"><button class="cyber-glitch-btn">探索项目</button></a>
+        </div>
     </header>
 
     <main>
+        <section id="services" class="container">
+            <h2 class="section-title glow-text reveal">// 服务矩阵</h2>
+            <div class="services-grid">
+                <div class="service-card reveal" style="transition-delay: 0.1s;">
+                    <div class="icon"><i class="fas fa-code"></i></div>
+                    <h3>前端架构</h3>
+                    <p>利用React, Vue和现代JavaScript构建高性能、可扩展的Web应用。</p>
+                </div>
+                <div class="service-card reveal" style="transition-delay: 0.2s;">
+                    <div class="icon"><i class="fas fa-palette"></i></div>
+                    <h3>UI/UX 设计</h3>
+                    <p>创造符合直觉、美观且具有赛博朋克美学的用户界面和体验。</p>
+                </div>
+                <div class="service-card reveal" style="transition-delay: 0.3s;">
+                    <div class="icon"><i class="fas fa-cubes"></i></div>
+                    <h3>3D & WebGL</h3>
+                    <p>使用Three.js等技术，将交互式3D模型和动态视觉效果带入浏览器。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="container">
+            <h2 class="section-title glow-text reveal">// 项目归档</h2>
+            <div class="project-filters reveal">
+                <button class="filter-btn active" data-filter="all">ALL</button>
+                <button class="filter-btn" data-filter="web">WEB_APP</button>
+                <button class="filter-btn" data-filter="3d">3D_VIS</button>
+                <button class="filter-btn" data-filter="ui">UI_DESIGN</button>
+            </div>
+            <div class="project-grid reveal">
+                <div class="project-item" data-category="web">
+                    <img src="https://images.unsplash.com/photo-1593720213428-28a5b9e94613?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8Y29kaW5nLGRldmVsb3BlcnxlbnwwfHx8fDE3MTc4NTgzNTc&ixlib=rb-4.0.3&q=80&w=1080" alt="项目图片">
+                    <div class="project-info"><h3>数据仪表盘</h3><p>类型: Web应用</p></div>
+                </div>
+                 <div class="project-item" data-category="3d">
+                    <img src="https://images.unsplash.com/photo-1634712282210-2b7a7601539e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8M2QsYWJzdHJhY3R8ZW58MHx8fHwxNzE3ODU4MzU3&ixlib=rb-4.0.3&q=80&w=1080" alt="项目图片">
+                    <div class="project-info"><h3>粒子系统</h3><p>类型: 3D可视化</p></div>
+                </div>
+                 <div class="project-item" data-category="ui">
+                    <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8dWksZGVzaWdufGVufDB8fHx8MTcxNzg1ODM1Nw&ixlib=rb-4.0.3&q=80&w=1080" alt="项目图片">
+                    <div class="project-info"><h3>移动OS概念</h3><p>类型: UI设计</p></div>
+                </div>
+                <div class="project-item" data-category="web">
+                    <img src="https://images.unsplash.com/photo-1542831371-d531d36971ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8Y3liZXJwdW5rLGNvZGV8ZW58MHx8fHwxNzE3ODU4Mzg2&ixlib=rb-4.0.3&q=80&w=1080" alt="项目图片">
+                    <div class="project-info"><h3>安全终端</h3><p>类型: Web应用</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="container">
+             <h2 class="section-title glow-text reveal">// 连接请求</h2>
+             <div class="terminal-contact reveal">
+                <div class="terminal-output" id="terminal-output">
+                    <div class="terminal-line">Welcome to Secure Terminal v2.3.</div>
+                    <div class="terminal-line">Enter 'help' for a list of commands.</div>
+                </div>
+                <div class="terminal-input-line">
+                    <span class="terminal-prompt">user@host:~$</span>
+                    <input type="text" id="terminal-input" autocomplete="off" autofocus>
+                </div>
+             </div>
+        </section>
+    </main>
+
+    <script>
+    /* -------------------------- */
+    /* --- JAVASCRIPT LOGIC --- */
+    /* -------------------------- */
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- 1. 打字机效果 ---
+        const typewriterElement = document.getElementById('typewriter');
+        const text = "CODE THE FUTURE.";
+        let index = 0;
+        function type() {
+            if (index < text.length) {
+                typewriterElement.innerHTML = text.substring(0, index + 1) + '<span class="cursor"></span>';
+                index++;
+                setTimeout(type, 150);
+            } else {
+                 setTimeout(() => {
+                    index = 0;
+                    type();
+                 }, 5000); // 5秒后重置
+            }
+        }
+        type();
+
+        // --- 2. 滚动触发动画 ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        revealElements.forEach(el => observer.observe(el));
+
+        // --- 3. 服务卡片3D倾斜效果 ---
+        const cards = document.querySelectorAll('.service-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const { width, height } = rect;
+                const rotateX = (y / height - 0.5) * -15; // 倾斜15度
+                const rotateY = (x / width - 0.5) * 15;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // --- 4. 项目筛选 ---
+        const filterButtons = document.querySelectorAll('.project-filters button');
+        const projectItems = document.querySelectorAll('.project-item');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelector('.project-filters .active').classList.remove('active');
+                button.classList.add('active');
+                const filter = button.dataset.filter;
+                projectItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.classList.remove('hide');
+                    } else {
+                        item.classList.add('hide');
+                    }
+                });
+            });
+        });
+
+        // --- 5. 终端式联系表单 ---
+        const terminalOutput = document.getElementById('terminal-output');
+        const terminalInput = document.getElementById('terminal-input');
+        
+        terminalInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value.trim();
+                appendLine(`user@host:~$ ${command}`);
+
+                if (command.startsWith('send_msg')) {
+                     appendLine("Executing: Message protocol initiated...");
+                     setTimeout(() => appendLine("Success: Your message has been encrypted and sent."), 1000);
+                } else if (command === 'help') {
+                    appendLine("Available commands:");
+                    appendLine("'send_msg [your_email] [your_message]' - Send a secure message.");
+                    appendLine("'clear' - Clear terminal screen.");
+                } else if (command === 'clear') {
+                     terminalOutput.innerHTML = '';
+                } else {
+                     appendLine(`Error: Command not found: ${command}`);
+                }
+                
+                this.value = '';
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            }
+        });
+
+        function appendLine(text) {
+            const line = document.createElement('div');
+            line.className = 'terminal-line';
+            line.textContent = text;
+            terminalOutput.appendChild(line);
+        }
+
+        // --- 6. 主题切换器 ---
+        const themeToggler = document.getElementById('theme-toggler');
+        const htmlEl = document.documentElement;
+        themeToggler.addEventListener('click', () => {
+            if (htmlEl.classList.contains('dark-theme')) {
+                htmlEl.classList.remove('dark-theme');
+                htmlEl.classList.add('light-theme');
+                themeToggler.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                htmlEl.classList.remove('light-theme');
+                htmlEl.classList.add('dark-theme');
+                themeToggler.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        });
+    });
+    </script>
+</body>
+</html>
+
