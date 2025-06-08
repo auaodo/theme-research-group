@@ -4,6 +4,731 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>先进合金材料课题组 | 主页</title>
+    <meta name="description" content="一个为合金材料课题组设计的，风格清新且富含科技感的网站主页，包含团队成员介绍。">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* ------------------------- */
+        /* --- CSS STYLESHEET --- */
+        /* ------------------------- */
+
+        /* --- 1. 全局变量与重置 --- */
+        :root {
+            --primary-color: #005f73;
+            --secondary-color: #0a9396;
+            --accent-color: #94d2bd;
+            --highlight-color: #e9d8a6;
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --light-gray: #e9ecef;
+            --border-radius: 8px;
+            --font-family-heading: 'Montserrat', 'Noto Sans SC', sans-serif;
+            --font-family-body: 'Noto Sans SC', sans-serif;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-family-body);
+            line-height: 1.7;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 5rem 0;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-family-heading);
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        h2.section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        h2.section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        /* --- 2. 导航栏 --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 0.75rem 5%;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li { margin-left: 2.5rem; }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--secondary-color);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        /* --- 3. Hero 区域 (含Canvas背景) --- */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 5%;
+        }
+
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            z-index: -1;
+        }
+
+        .hero-content { max-width: 800px; }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 12px 28px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
+
+        /* --- 4. 滚动动画 --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- 5. 研究方向 --- */
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .research-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+            text-align: center;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .research-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .research-card .icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .research-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        /* --- 6. 团队成员 --- */
+        .team-section-divider {
+            margin: 4rem auto;
+            width: 80%;
+            height: 1px;
+            background-color: var(--light-gray);
+        }
+
+        .professor-profile {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .professor-img {
+            flex: 0 0 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--accent-color);
+        }
+
+        .professor-info { flex: 1; }
+        .professor-info h3 { font-size: 1.8rem; }
+        .professor-info .title {
+            font-style: italic;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            margin-top: 1rem;
+        }
+        .social-links a {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover { color: var(--secondary-color); }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .team-member-card {
+            background: white;
+            border-radius: var(--border-radius);
+            text-align: center;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .team-member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .team-member-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 3px solid var(--light-gray);
+        }
+        
+        .team-member-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .team-member-info .status {
+            color: var(--secondary-color);
+            font-weight: 700;
+        }
+
+        /* --- 7. 新闻动态 --- */
+        .news-item {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .news-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .news-date {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            text-align: center;
+            flex-shrink: 0;
+            width: 80px;
+        }
+
+        .news-date .day {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .news-date .month-year { font-size: 0.8rem; }
+        
+        .news-content { flex: 1; }
+        .news-content h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .news-content a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+        .news-content a:hover {
+            text-decoration: underline;
+            color: var(--secondary-color);
+        }
+        
+        /* --- 8. 页脚 --- */
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 4rem 5%;
+            text-align: center;
+        }
+        
+        .footer h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .footer p { opacity: 0.8; }
+        .footer a {
+            color: var(--highlight-color);
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- 9. 响应式设计 --- */
+        @media (max-width: 768px) {
+            .nav-toggle { display: block; }
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: white;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+            }
+            
+            .nav-links.active {
+                max-height: 500px;
+                padding: 1rem 0;
+            }
+
+            .nav-links li { margin: 1rem 0; }
+            .news-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            .professor-profile {
+                 flex-direction: column;
+                 text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar" id="navbar">
+            <a href="#" class="nav-logo">先进合金材料</a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#hero">首页</a></li>
+                <li><a href="#research">研究方向</a></li>
+                <li><a href="#team">团队成员</a></li>
+                <li><a href="#news">新闻动态</a></li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+            <div class="nav-toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <canvas id="hero-canvas"></canvas>
+            <div class="hero-content">
+                <h1>探索材料科学前沿，塑造未来先进合金</h1>
+                <p>我们致力于通过计算模拟与实验验证相结合的方法，设计和开发具有优异性能的新型合金材料，以应对航空航天、能源和医疗领域的挑战。</p>
+                <a href="#research" class="cta-button">了解更多</a>
+            </div>
+        </section>
+
+        <!-- Research Section -->
+        <section id="research" class="container">
+            <h2 class="section-title fade-in">研究方向</h2>
+            <div class="research-grid">
+                <div class="research-card fade-in" style="transition-delay: 0.1s;">
+                    <div class="icon"><i class="fas fa-atom"></i></div>
+                    <h3>高性能钛合金</h3>
+                    <p>开发用于航空发动机和生物医疗植入物的轻质高强钛合金材料。</p>
+                </div>
+                <div class="research-card fade-in" style="transition-delay: 0.2s;">
+                    <div class="icon"><i class="fas fa-cogs"></i></div>
+                    <h3>增材制造 (3D打印)</h3>
+                    <p>研究金属3D打印过程中的微观组织演变与性能控制。</p>
+                </div>
+                <div class="research-card fade-in" style="transition-delay: 0.3s;">
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>计算材料学</h3>
+                    <p>利用第一性原理、分子动力学等方法进行材料设计与性能预测。</p>
+                </div>
+                 <div class="research-card fade-in" style="transition-delay: 0.4s;">
+                    <div class="icon"><i class="fas fa-thermometer-half"></i></div>
+                    <h3>高温合金</h3>
+                    <p>设计能够在极端温度和应力环境下稳定服役的新一代高温合金。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Team Section -->
+        <section id="team" class="container">
+            <h2 class="section-title fade-in">团队成员</h2>
+            <div class="professor-profile fade-in">
+                <img src="https://placehold.co/200x200/005f73/FFFFFF?text=导师" alt="导师照片" class="professor-img">
+                <div class="professor-info">
+                    <h3>李明 教授</h3>
+                    <p class="title">博士生导师，课题组负责人</p>
+                    <p>李明教授是材料科学领域的知名学者，长期从事高性能合金的研究与开发工作。他的研究兴趣包括合金设计理论、微观组织表征以及先进制造技术。已发表SCI论文100余篇，并担任多个国际期刊的编委。</p>
+                    <div class="social-links">
+                        <a href="#" title="ORCID"><i class="fab fa-orcid"></i></a>
+                        <a href="#" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-section-divider fade-in"></div>
+
+            <div class="team-grid">
+                <!-- Student Card 1 -->
+                <div class="team-member-card fade-in" style="transition-delay: 0.1s;">
+                    <img src="https://placehold.co/120x120/0a9396/FFFFFF?text=学生A" alt="学生照片" class="team-member-img">
+                    <div class="team-member-info">
+                        <h4>王伟</h4>
+                        <p class="status">博士生 (2022级)</p>
+                        <p>研究方向：钛合金的疲劳与断裂</p>
+                    </div>
+                </div>
+                <!-- Student Card 2 -->
+                <div class="team-member-card fade-in" style="transition-delay: 0.2s;">
+                    <img src="https://placehold.co/120x120/0a9396/FFFFFF?text=学生B" alt="学生照片" class="team-member-img">
+                    <div class="team-member-info">
+                        <h4>张静</h4>
+                        <p class="status">博士生 (2023级)</p>
+                        <p>研究方向：高温合金的3D打印</p>
+                    </div>
+                </div>
+                <!-- Student Card 3 -->
+                <div class="team-member-card fade-in" style="transition-delay: 0.3s;">
+                    <img src="https://placehold.co/120x120/0a9396/FFFFFF?text=学生C" alt="学生照片" class="team-member-img">
+                    <div class="team-member-info">
+                        <h4>刘洋</h4>
+                        <p class="status">硕士生 (2023级)</p>
+                        <p>研究方向：计算材料学模拟</p>
+                    </div>
+                </div>
+                <!-- Student Card 4 -->
+                 <div class="team-member-card fade-in" style="transition-delay: 0.4s;">
+                    <img src="https://placehold.co/120x120/0a9396/FFFFFF?text=学生D" alt="学生照片" class="team-member-img">
+                    <div class="team-member-info">
+                        <h4>陈悦</h4>
+                        <p class="status">硕士生 (2024级)</p>
+                        <p>研究方向：医用金属材料</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Section -->
+        <section id="news" class="container">
+            <h2 class="section-title fade-in">新闻动态</h2>
+            <div class="news-container fade-in">
+                <div class="news-item">
+                    <div class="news-date">
+                        <span class="day">08</span>
+                        <span class="month-year">6月 '25</span>
+                    </div>
+                    <div class="news-content">
+                        <h3><a href="#">祝贺博士生王伟的论文在《Nature Materials》发表！</a></h3>
+                        <p>文章揭示了新型钛合金在循环载荷下的微观裂纹萌生机理...</p>
+                    </div>
+                </div>
+                <div class="news-item">
+                     <div class="news-date">
+                        <span class="day">21</span>
+                        <span class="month-year">5月 '25</span>
+                    </div>
+                    <div class="news-content">
+                        <h3><a href="#">李教授荣获国家杰出青年科学基金</a></h3>
+                        <p>课题组负责人李教授因其在高温合金领域的突出贡献，获得国家杰青项目资助...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <h3>联系我们</h3>
+        <p>地址：中国XX省XX市XX大学材料科学与工程学院大楼 302室</p>
+        <p>邮箱：<a href="mailto:contact@advancedalloys.com">contact@advancedalloys.com</a> | 电话：(010) 1234 5678</p>
+        <p style="margin-top: 2rem; opacity: 0.6;">&copy; 2025 先进合金材料课题组. 保留所有权利.</p>
+    </footer>
+
+    <script>
+    /* -------------------------- */
+    /* --- JAVASCRIPT LOGIC --- */
+    /* -------------------------- */
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const navbar = document.getElementById('navbar');
+        const navToggle = document.getElementById('nav-toggle');
+        const navLinksContainer = document.getElementById('nav-links');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const sections = document.querySelectorAll('section');
+
+        // --- 1. 导航栏滚动效果 ---
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // --- 2. 移动端导航栏开关 ---
+        navToggle.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('active');
+        });
+
+        // --- 3. 滚动触发的渐入动画 ---
+        const faders = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        faders.forEach(el => observer.observe(el));
+
+        // --- 4. 滚动侦测 (Scroll Spy) - 高亮当前导航链接 ---
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 60) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // --- 5. Canvas 动态背景 ---
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        
+        function setCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        setCanvasSize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.color = 'rgba(255, 255, 255, 0.5)';
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+                this.x += this.speedX;
+                this.y += this.speedY;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            particles = [];
+            let numberOfParticles = (canvas.width * canvas.height) / 10000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function connect() {
+            let opacityValue = 1;
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x))
+                                 + ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
+                    if (distance < (canvas.width/8) * (canvas.height/8)) {
+                        opacityValue = 1 - (distance/20000);
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${opacityValue})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+        
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for(let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            connect();
+            requestAnimationFrame(animate);
+        }
+        
+        window.addEventListener('resize', () => {
+            setCanvasSize();
+            init();
+        });
+        
+        init();
+        animate();
+    });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>先进合金材料课题组 | 主页</title>
     <meta name="description" content="一个为合金材料课题组设计的，风格清新且富含科技感的网站主页。">
     
     <!-- Google Fonts -->
